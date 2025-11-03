@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - drop
+  - output
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - drop
   - 
   - input
-  - 
+  - connectable
   - 
   - 
   - 

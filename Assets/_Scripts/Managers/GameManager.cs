@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,7 +9,10 @@ public class GameManager : MonoBehaviour
     public int totalInputs = 4;
     [HideInInspector] public bool allPlaced = false;
 
-    [SerializeField] private LineConnector lineConnector; // assign in inspector
+    [SerializeField] private LineConnector lineConnector;
+    [SerializeField] private GameObject predictButton; // assign in Inspector
+
+    private bool allConnected = false;
 
     void Awake()
     {
@@ -17,9 +21,11 @@ public class GameManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        // ensure line drawer is disabled on start
         if (lineConnector != null)
             lineConnector.enabled = false;
+
+        if (predictButton != null)
+            predictButton.SetActive(false);
     }
 
     public void OnInputPlaced()
@@ -29,17 +35,39 @@ public class GameManager : MonoBehaviour
         if (placedCount >= totalInputs && !allPlaced)
         {
             allPlaced = true;
-            Debug.Log("All inputs placed! You can now connect them.");
+            Debug.Log("? All inputs placed! You can now connect them.");
 
             // Disable drag scripts
             Drag[] draggables = FindObjectsByType<Drag>(FindObjectsSortMode.None);
             foreach (var d in draggables)
                 d.enabled = false;
 
-            // Enable the line drawer
+            // Enable line connector
             if (lineConnector != null)
                 lineConnector.enabled = true;
         }
+
+        CheckIfReadyToPredict();
+    }
+
+    public void OnConnectionsComplete()
+    {
+        allConnected = true;
+        Debug.Log("? All connections complete!");
+        CheckIfReadyToPredict();
+    }
+
+    private void CheckIfReadyToPredict()
+    {
+        // ? Only show Predict button when BOTH conditions are true
+        if (allPlaced && allConnected)
+        {
+            Debug.Log("?? All ready! Showing Predict button...");
+            if (predictButton != null)
+                predictButton.SetActive(true);
+        }
     }
 }
+
+
 
