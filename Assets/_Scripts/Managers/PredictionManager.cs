@@ -25,34 +25,36 @@ public class PredictionManager : MonoBehaviour
     }
 
     public void ShowPredictions()
+{
+    int accurateCount = 0;
+
+        // ?? Hide all connection lines
+        foreach (var line in FindObjectsByType<LineRenderer>(FindObjectsSortMode.None))
+            line.enabled = false;
+
+    // ?? Continue with your prediction logic
+    foreach (var c in cities)
     {
-        int accurateCount = 0;
+        bool realIsSunny = Random.value > 0.5f;
+        bool predictedIsSunny;
 
-        foreach (var c in cities)
+        if (accurateCount < 2)
         {
-            // Randomly choose predicted & real weather
-            bool realIsSunny = Random.value > 0.5f;
-            bool predictedIsSunny;
-
-            // First 2 should be accurate
-            if (accurateCount < 2)
-            {
-                predictedIsSunny = realIsSunny;
-                accurateCount++;
-            }
-            else
-            {
-                predictedIsSunny = !realIsSunny;
-            }
-
-            // Assign sprites
-            c.predictedIcon.sprite = predictedIsSunny ? sunnySprite : rainSprite;
-            c.realIcon.sprite = realIsSunny ? sunnySprite : rainSprite;
-
-            // Color city name based on correctness
-            bool isCorrect = (predictedIsSunny == realIsSunny);
-            c.cityNameText.color = isCorrect ? Color.green : Color.red;
+            predictedIsSunny = realIsSunny;
+            accurateCount++;
         }
+        else
+        {
+            predictedIsSunny = !realIsSunny;
+        }
+
+        c.predictedIcon.sprite = predictedIsSunny ? sunnySprite : rainSprite;
+        c.realIcon.sprite = realIsSunny ? sunnySprite : rainSprite;
+
+        bool isCorrect = (predictedIsSunny == realIsSunny);
+        c.cityNameText.color = isCorrect ? Color.green : Color.red;
     }
+}
+
 }
 

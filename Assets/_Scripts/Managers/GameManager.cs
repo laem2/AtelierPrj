@@ -53,19 +53,23 @@ public class GameManager : MonoBehaviour
     public void OnConnectionsComplete()
     {
         allConnected = true;
-        Debug.Log("? All connections complete!");
+        Debug.Log(" All connections complete!");
         CheckIfReadyToPredict();
     }
 
     private void CheckIfReadyToPredict()
     {
-        // ? Only show Predict button when BOTH conditions are true
+        //  Only show Predict button when BOTH conditions are true
         if (allPlaced && allConnected)
         {
-            Debug.Log("?? All ready! Showing Predict button...");
-            if (predictButton != null)
-                predictButton.SetActive(true);
+            Debug.Log("All ready! Showing Predict button...");
+            predictButton.SetActive(true);
+
+            Debug.Log($"Button assigned: {predictButton != null}");
+            Debug.Log($"Button activeSelf: {predictButton.activeSelf}");
+            Debug.Log($"Button activeInHierarchy: {predictButton.activeInHierarchy}");
         }
+
     }
 }
 
