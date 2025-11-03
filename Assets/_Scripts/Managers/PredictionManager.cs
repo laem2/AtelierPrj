@@ -31,9 +31,9 @@ public class PredictionManager : MonoBehaviour
         // ?? Hide all connection lines
         foreach (var line in FindObjectsByType<LineRenderer>(FindObjectsSortMode.None))
             line.enabled = false;
-
-    // ?? Continue with your prediction logic
-    foreach (var c in cities)
+        DialogueManager.Instance.OnPredictionShown();
+        // ?? Continue with your prediction logic
+        foreach (var c in cities)
     {
         bool realIsSunny = Random.value > 0.5f;
         bool predictedIsSunny;

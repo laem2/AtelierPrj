@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
         {
             allPlaced = true;
             Debug.Log("? All inputs placed! You can now connect them.");
+            DialogueManager.Instance.OnInputsPlaced();
 
             // Disable drag scripts
             Drag[] draggables = FindObjectsByType<Drag>(FindObjectsSortMode.None);
@@ -64,6 +65,8 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("All ready! Showing Predict button...");
             predictButton.SetActive(true);
+
+            DialogueManager.Instance.OnOutputConnected();
 
             Debug.Log($"Button assigned: {predictButton != null}");
             Debug.Log($"Button activeSelf: {predictButton.activeSelf}");
